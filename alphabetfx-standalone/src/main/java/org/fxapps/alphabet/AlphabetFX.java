@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -25,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
@@ -57,9 +60,10 @@ public class AlphabetFX extends Application {
     private static final int detailsImgPosY = HEIGHT / 2 - DETAILS_IMG_HEIGHT / 2;
 
     private static final String IMG_EXT = ".png";
-
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
+    private boolean IS_AUTO = false;
+    
     private ImageView letterImg;
     private ImageView detailsImg;
     private Label lblDetails;
@@ -67,6 +71,9 @@ public class AlphabetFX extends Application {
 
     private Character cursor = INITIAL_CHAR;
     private Map<Character, List<Pair<String, String>>> detailsImages;
+    private FadeTransition letterFade;
+    private Timeline letterAnimation;
+    private Pane root;
 
     public static void main(String[] args) {
         launch();
@@ -74,58 +81,101 @@ public class AlphabetFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.initStyle(StageStyle.UNDECORATED);
         var scene = new Scene(buildApp(), WIDTH, HEIGHT);
         stage.setScene(scene);
+        scene.setFill(Color.PALETURQUOISE);
         stage.show();
     }
 
     public Pane buildApp() {
+        
+        root = new Pane();
         detailsImages = bulkDetailsImages();
 
         letterImg = new ImageView();
         detailsImg = new ImageView();
         lblDetails = new Label();
-        detailsImgParent = new VBox(10, detailsImg, lblDetails);
-
+        
+        
         detailsImg.setEffect(new DropShadow());
         lblDetails.setEffect(new DropShadow(10, Color.BEIGE));
-
         lblDetails.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 40));
-
+        
+        detailsImgParent = new VBox(10, detailsImg, lblDetails);
         detailsImgParent.setLayoutX(detailsImgPosX);
         detailsImgParent.setLayoutY(detailsImgPosY);
         detailsImgParent.setAlignment(Pos.CENTER);
 
+        root.getChildren().addAll(letterImg, detailsImgParent);
+        
+        
+        var autoFadeTransition = new FadeTransition(Duration.millis(1000));
+        autoFadeTransition.setFromValue(1);
+        autoFadeTransition.setToValue(0);
+        autoFadeTransition.setNode(root);
+        autoFadeTransition.setCycleCount(1);
+        autoFadeTransition.setOnFinished(e -> {
+            next();
+        });
+        
+        var autoAfterPokemon = new Timeline(new KeyFrame(Duration.seconds(2)));
+        autoAfterPokemon.setOnFinished(e -> autoFadeTransition.playFromStart());
+        
+        var autoAfterLetter = new Timeline(new KeyFrame(Duration.seconds(1)));
+        autoAfterLetter.setOnFinished(e -> letterAnimation.playFromStart());
+        
+        letterFade = new FadeTransition(Duration.millis(1000));
+        letterFade.setFromValue(0);
+        letterFade.setToValue(0.7);
+        letterFade.setNode(letterImg);
+        
+        letterFade.setOnFinished(e -> {
+            if (IS_AUTO) {
+                autoAfterLetter.playFromStart();
+            } else {
+                letterImg.setDisable(false);
+            }
+        });
+
+        
+        letterAnimation = new Timeline(new KeyFrame(Duration.millis(0),
+                                                    new KeyValue(letterImg.layoutXProperty(), letterImgPosX),
+                                                    new KeyValue(letterImg.layoutYProperty(), letterImgPosY),
+                                                    new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_WIDTH),
+                                                    new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_HEIGHT)),
+                                       new KeyFrame(Duration.millis(1000),
+                                                    new KeyValue(letterImg.layoutXProperty(), 0),
+                                                    new KeyValue(letterImg.layoutYProperty(), 0),
+                                                    new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_MIN_WIDTH),
+                                                    new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_MIN_HEIGHT)),
+                                       new KeyFrame(Duration.millis(800),
+                                                    new KeyValue(detailsImgParent.opacityProperty(), 0)),
+                                       new KeyFrame(Duration.millis(2000),
+                                                    new KeyValue(detailsImgParent.opacityProperty(), 1.0)));
+
+        letterAnimation.setOnFinished(ee -> {
+            detailsImgParent.setDisable(false);
+            if (IS_AUTO) {
+                autoAfterPokemon.playFromStart();
+            }
+        });
+
         letterImg.setOnMouseClicked(e -> {
             letterImg.setDisable(true);
-            var letterAnimation = new Timeline(new KeyFrame(Duration.millis(0),
-                                                            new KeyValue(letterImg.layoutXProperty(), letterImgPosX),
-                                                            new KeyValue(letterImg.layoutYProperty(), letterImgPosY),
-                                                            new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_WIDTH),
-                                                            new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_HEIGHT)),
-                                               new KeyFrame(Duration.millis(1000),
-                                                            new KeyValue(letterImg.layoutXProperty(), 0),
-                                                            new KeyValue(letterImg.layoutYProperty(), 0),
-                                                            new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_MIN_WIDTH),
-                                                            new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_MIN_HEIGHT)),
-                                               new KeyFrame(Duration.millis(800),
-                                                            new KeyValue(detailsImgParent.opacityProperty(), 0)),
-                                               new KeyFrame(Duration.millis(2000),
-                                                            new KeyValue(detailsImgParent.opacityProperty(), 1.0)));
             letterAnimation.playFromStart();
-            letterAnimation.setOnFinished(ee -> detailsImgParent.setDisable(false));
         });
 
         detailsImgParent.setOnMouseClicked(e -> next());
 
-        loadRandomizedFor(cursor);
-
-        var root = new Pane(letterImg, detailsImgParent);
         root.setTranslateX(0);
         root.setTranslateY(0);
         root.setMinSize(WIDTH, HEIGHT);
         root.setStyle("-fx-background-color: paleturquoise");
 
+        
+        loadRandomizedFor(cursor);
+        
         return root;
     }
 
@@ -153,8 +203,8 @@ public class AlphabetFX extends Application {
         letterImg.setSmooth(true);
         letterImg.setLayoutX(letterImgPosX);
         letterImg.setLayoutY(letterImgPosY);
-        letterImg.setDisable(false);
-        letterImg.setOpacity(0.7);
+        letterImg.setDisable(true);
+        letterImg.setOpacity(0);
 
         // details img setup
         detailsImg.setImage(new Image(AlphabetFX.class.getResourceAsStream(details.getValue())));
@@ -167,14 +217,17 @@ public class AlphabetFX extends Application {
         detailsImgParent.setOpacity(0);
         detailsImgParent.setDisable(true);
         lblDetails.setText(details.getKey());
+        
+        root.setOpacity(1);
+        letterFade.play();
 
         //        new MediaPlayer(new Media(soundPath)).play();
     }
 
     private Map<Character, List<Pair<String, String>>> bulkDetailsImages() {
         try {
-            System.out.println("DETAILS >>> " + AlphabetFX.class.getResource("/details"));
-            var resource = AlphabetFX.class.getResource("/details");
+            System.out.println("DETAILS >>> " + AlphabetFX.class.getResource("/details.txt"));
+            var resource = AlphabetFX.class.getResource("/details.txt");
             return Files.lines(Paths.get(resource.toURI()))
                         .map(name -> {
                             System.out.println(name);
