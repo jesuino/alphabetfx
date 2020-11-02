@@ -1,7 +1,7 @@
 package org.fxapps.alphabet;
 
-import java.io.File;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -31,7 +31,7 @@ import javafx.util.Pair;
 public class AlphabetFX extends Application {
 
     private static final String ALPHABET_IMAGES_DIR = "/images/alphabet/";
-    private static final String DETAILS_IMAGES_DIR = "/images/details";
+    private static final String DETAILS_IMAGES_DIR = "/images/details/";
 
     private static final String ALPHABET_SOUND_DIR = "/sounds/alphabet/";
 
@@ -50,11 +50,11 @@ public class AlphabetFX extends Application {
     private static final int DETAILS_IMG_WIDTH = LETTER_IMG_HEIGHT - LETTER_IMG_HEIGHT / 4;
     private static final int DETAILS_IMG_HEIGHT = LETTER_IMG_HEIGHT - LETTER_IMG_HEIGHT / 4;
 
-    private static final int letterImgPosX = -LETTER_IMG_MIN_WIDTH;
-    private static final int letterImgPosY = HEIGHT / 2 - LETTER_IMG_HEIGHT / 2 + 50;
+    private static final int letterImgPosX = WIDTH / 2 - LETTER_IMG_WIDTH / 2;
+    private static final int letterImgPosY = HEIGHT / 2 - LETTER_IMG_HEIGHT / 2;
 
-    private static final int detailsImgPosX = 0;
-    private static final int detailsImgPosY = HEIGHT / 2 - DETAILS_IMG_HEIGHT / 2 + 50;
+    private static final int detailsImgPosX = WIDTH / 2 - DETAILS_IMG_WIDTH / 2;
+    private static final int detailsImgPosY = HEIGHT / 2 - DETAILS_IMG_HEIGHT / 2;
 
     private static final String IMG_EXT = ".png";
 
@@ -74,7 +74,7 @@ public class AlphabetFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        var scene = new Scene(buildApp(), 335, 600);
+        var scene = new Scene(buildApp(), WIDTH, HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
@@ -173,20 +173,14 @@ public class AlphabetFX extends Application {
 
     private Map<Character, List<Pair<String, String>>> bulkDetailsImages() {
         try {
-            System.out.println("DETAILS: " + AlphabetFX.class.getResource("/details"));
-            var detailImages = AlphabetFX.class.getResource(DETAILS_IMAGES_DIR);
-            return Arrays.stream(new File(detailImages.getFile()).listFiles())
-                   .map(f -> {
-                       var name = f.getName().replaceAll(IMG_EXT, "");
-                       var path = DETAILS_IMAGES_DIR + "/" + f.getName(); 
-                       return new Pair<>(name, path);
-                   }).collect(Collectors.groupingBy(p -> p.getKey().toUpperCase().toCharArray()[0]));
-//            var resource = AlphabetApp.class.getResource("/details");
-//            return Files.lines(Paths.get(resource.toURI()))
-//                        .map(name -> {
-//                            String path = DETAILS_IMAGES_DIR + name + IMG_EXT;
-//                            return new Pair<>(name, path);
-//                        }).collect(Collectors.groupingBy(p -> p.getKey().substring(0, 1).toCharArray()[0]));
+            System.out.println("DETAILS >>> " + AlphabetFX.class.getResource("/details"));
+            var resource = AlphabetFX.class.getResource("/details");
+            return Files.lines(Paths.get(resource.toURI()))
+                        .map(name -> {
+                            System.out.println(name);
+                            String path = DETAILS_IMAGES_DIR + name + IMG_EXT;
+                            return new Pair<>(name, path);
+                        }).collect(Collectors.groupingBy(p -> p.getKey().substring(0, 1).toCharArray()[0]));
         } catch (Exception e) {
             throw new RuntimeException("[DEBUG] Error reading FILE", e);
         }

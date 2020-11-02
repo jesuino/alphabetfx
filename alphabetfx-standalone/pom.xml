@@ -8,7 +8,7 @@
     <version>1.0</version>
   </parent>
 
-  <artifactId>alphabetfx</artifactId>
+  <artifactId>alphabetfx-standalone</artifactId>
   <name>AlphabetFX</name>
   <description>An app for kids learn the alphabet.</description>
 

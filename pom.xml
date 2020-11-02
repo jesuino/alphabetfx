@@ -18,7 +18,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<modules>
-		<module>alphabetfx</module>
+		<module>alphabetfx-standalone</module>
 		<module>alphabetfx-app</module>
 	</modules>
 

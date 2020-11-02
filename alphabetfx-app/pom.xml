@@ -74,8 +74,8 @@
       <version>${attach.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.fxapps</groupId>
-      <artifactId>alphabetfx</artifactId>
+      <groupId>org.fxapps.alphabetfx</groupId>
+      <artifactId>alphabetfx-standalone</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
   </dependencies>
