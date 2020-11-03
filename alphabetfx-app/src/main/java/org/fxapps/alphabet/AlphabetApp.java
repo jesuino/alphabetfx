@@ -16,7 +16,7 @@ public class AlphabetApp extends MobileApplication {
     @Override
     public void init() {
         addViewFactory(HOME_VIEW, () -> {
-            View view = new View(alphabetFX.buildApp()) {
+            View view = new View(alphabetFX.buildApp(false)) {
                 @Override
                 protected void updateAppBar(AppBar appBar) {
                     appBar.setTitleText("AlphabetFX App");

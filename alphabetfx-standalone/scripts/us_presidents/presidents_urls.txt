@@ -1,0 +1,45 @@
+https://presidenstory.com/usimag/phot2/washington.jpg,George Washington
+https://presidenstory.com/usimag/phot2/adams.jpg,John Adams
+https://presidenstory.com/usimag/phot2/jefferson.jpg,Thomas Jefferson
+https://presidenstory.com/usimag/phot2/madison.jpg,James Madison
+https://presidenstory.com/usimag/phot2/monroe.jpg,James Monroe
+https://presidenstory.com/usimag/phot2/quincyadams.jpg,John Quincy Adams
+https://presidenstory.com/usimag/phot2/jackson.jpg,Andrew Jackson
+https://presidenstory.com/usimag/phot2/vanburen.jpg,Martin van Buren
+https://presidenstory.com/usimag/phot2/h_harrison.jpg,William H. Harrison
+https://presidenstory.com/usimag/phot2/tyler.jpg,John Tyler
+https://presidenstory.com/usimag/phot2/polk.jpg,James K. Polk
+https://presidenstory.com/usimag/phot2/taylor.jpg,Zachary Taylor
+https://presidenstory.com/usimag/phot2/fillmore.jpg,Millard Fillmore
+https://presidenstory.com/usimag/phot2/pierce.jpg,Franklin Pierce
+https://presidenstory.com/usimag/phot2/buchanan.jpg,James Buchanan
+https://presidenstory.com/usimag/phot2/lincoln.jpg,Abraham Lincoln
+https://presidenstory.com/usimag/phot2/ajohnson.jpg,Andrew Johnson
+https://presidenstory.com/usimag/phot2/grant.jpg,Ulysses S. Grant
+https://presidenstory.com/usimag/phot2/hayes.jpg,Rutherford Hayes
+https://presidenstory.com/usimag/phot2/garfield.jpg,James Garfield
+https://presidenstory.com/usimag/phot2/arthur.jpg,Chester Arthur
+https://presidenstory.com/usimag/phot2/cleveland.jpg,Grover Cleveland
+https://presidenstory.com/usimag/phot2/harrison.jpg,Benjamin Harrison
+https://presidenstory.com/usimag/phot2/cleveland.jpg,Grover Cleveland
+https://presidenstory.com/usimag/phot2/mckinley.jpg,William McKinley
+https://presidenstory.com/usimag/phot2/roosevelt.jpg,Theodore Roosevelt
+https://presidenstory.com/usimag/phot2/taft.jpg,William Taft
+https://presidenstory.com/usimag/phot2/wilson.jpg,Woodrow Wilson
+https://presidenstory.com/usimag/phot2/harding.jpg,Warren Harding
+https://presidenstory.com/usimag/phot2/coolidge.jpg,Calvin Coolidge
+https://presidenstory.com/usimag/phot2/hoover.jpg,Herbert C. Hoover
+https://presidenstory.com/usimag/phot2/fdr.jpg,Franklin Roosevelt
+https://presidenstory.com/usimag/phot2/truman.jpg,Harry S Truman
+https://presidenstory.com/usimag/phot2/ike.jpg,Dwight Eisenhower
+https://presidenstory.com/usimag/phot2/jfk.jpg,John F. Kennedy
+https://presidenstory.com/usimag/phot2/johnson.jpg,Lyndon Johnson
+https://presidenstory.com/usimag/phot2/nixon.jpg,Richard Nixon
+https://presidenstory.com/usimag/phot2/ford.jpg,Gerald R. Ford
+https://presidenstory.com/usimag/phot2/carter.jpg,Jimmy Carter
+https://presidenstory.com/usimag/phot2/reagan.jpg,Ronald Reagan
+https://presidenstory.com/usimag/phot2/bush.jpg,George H. W. Bush
+https://presidenstory.com/usimag/phot2/clinton.jpg,Bill Clinton
+https://presidenstory.com/usimag/phot2/wbush.jpg,George W. Bush
+https://presidenstory.com/usimag/phot2/obama.jpg,Barack Obama
+https://presidenstory.com/usimag/phot2/donald-trump.jpg,Donald Trump

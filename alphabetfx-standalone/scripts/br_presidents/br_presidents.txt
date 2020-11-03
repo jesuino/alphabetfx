@@ -1,0 +1,38 @@
+1,Deodoro da Fonseca,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Deodoro_da_Fonseca_%281889%29.jpg/80px-Deodoro_da_Fonseca_%281889%29.jpg
+2,Floriano Peixoto,https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Floriano_Peixoto_%281891%29.jpg/80px-Floriano_Peixoto_%281891%29.jpg
+3,Prudente de Morais,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Prudentedemorais.jpg/80px-Prudentedemorais.jpg
+4,Campos Sales,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Campos_Sales.jpg/80px-Campos_Sales.jpg
+5,Rodrigues Alves,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Rodrigues_Alves_3.jpg/80px-Rodrigues_Alves_3.jpg
+6,Afonso Pena,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Afonso_Pena.jpg/80px-Afonso_Pena.jpg
+7,Nilo Peçanha,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Nilo_Pe%C3%A7anha_02.jpg/80px-Nilo_Pe%C3%A7anha_02.jpg
+8,Hermes da Fonseca,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Hermes_da_Fonseca_%281910%29.jpg/80px-Hermes_da_Fonseca_%281910%29.jpg
+9,Venceslau Brás,https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Venceslau_Br%C3%A1s.jpg/80px-Venceslau_Br%C3%A1s.jpg
+10,Delfim Moreira,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Delfim_Moreira_%281918%29.jpg/80px-Delfim_Moreira_%281918%29.jpg
+11,Epitácio Pessoa,https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Epitacio_Pessoa_%281919%29.jpg/80px-Epitacio_Pessoa_%281919%29.jpg
+12,Artur Bernardes,https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Artur_Bernardes_%281922%29.jpg/80px-Artur_Bernardes_%281922%29.jpg
+13,Washington Luís,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Washington_Lu%C3%ADs_%28foto%29.jpg/80px-Washington_Lu%C3%ADs_%28foto%29.jpg
+14,Getúlio Vargas,https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Getulio_Vargas_%281930%29.jpg/80px-Getulio_Vargas_%281930%29.jpg
+15,José Linhares,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Jos%C3%A9_Linhares_TSE.jpg/80px-Jos%C3%A9_Linhares_TSE.jpg
+16,Eurico Gaspar Dutra,https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/GASPARDUTRA.jpg/80px-GASPARDUTRA.jpg
+17,Getúlio Vargas,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/17_-_Get%C3%BAlio_Dorneles_Vargas_1951_derivative.jpg/80px-17_-_Get%C3%BAlio_Dorneles_Vargas_1951_derivative.jpg
+18,Café Filho,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Caf%C3%A9_Filho.jpg/80px-Caf%C3%A9_Filho.jpg
+19,Carlos Luz,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/CarlosLuz.jpg/80px-CarlosLuz.jpg
+20,Nereu Ramos,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Presidente_Nereu_Ramos.jpg/80px-Presidente_Nereu_Ramos.jpg
+21,Juscelino Kubitschek,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Juscelino.jpg/80px-Juscelino.jpg
+22,Jânio Quadros,https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Janio_Quadros.png/80px-Janio_Quadros.png
+23,Ranieri Mazzilli,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Ranieri_Mazzilli_%281961%29.jpg/80px-Ranieri_Mazzilli_%281961%29.jpg
+24,João Goulart,https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Jango.jpg/80px-Jango.jpg
+25,Ranieri Mazzilli,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Ranieri_Mazzilli_%281961%29.jpg/80px-Ranieri_Mazzilli_%281961%29.jpg
+26,Humberto Castelo Branco,https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Castelobranco.jpg/80px-Castelobranco.jpg
+27,Artur da Costa e Silva,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Costa_e_Silva.jpg/80px-Costa_e_Silva.jpg
+28,Emílio Garrastazu Médici,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Garrastazu_m%C3%A9dici.jpg/80px-Garrastazu_m%C3%A9dici.jpg
+29,Ernesto Geisel,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Ernesto_Geisel.jpg/80px-Ernesto_Geisel.jpg
+30,João Figueiredo,https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Figueiredo_%28colour%29.jpg/80px-Figueiredo_%28colour%29.jpg
+31,José Sarney,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Foto_Oficial_Sarney_EBC.jpg/80px-Foto_Oficial_Sarney_EBC.jpg
+32,Fernando Collor,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Fernando_Collor_1992_B%26W.jpg/80px-Fernando_Collor_1992_B%26W.jpg
+33,Itamar Franco,https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Itamar_Augusto_Cautiero_Franco.gif/80px-Itamar_Augusto_Cautiero_Franco.gif
+34,Fernando Henrique Cardoso,https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Fernando_Henrique_Cardoso_%281999%29.jpg/80px-Fernando_Henrique_Cardoso_%281999%29.jpg
+35,Luiz Inácio Lula da Silva,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Lula_-_foto_oficial_-_05_jan_2007_%28cropped_3%29.jpg/80px-Lula_-_foto_oficial_-_05_jan_2007_%28cropped_3%29.jpg
+36,Dilma Rousseff,https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Dilma_Rousseff_-_foto_oficial_2011-01-09.jpg/80px-Dilma_Rousseff_-_foto_oficial_2011-01-09.jpg
+37,Michel Temer,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Presidente_Michel_Temer_%28foto_oficial%29_-_cortada.jpg/79px-Presidente_Michel_Temer_%28foto_oficial%29_-_cortada.jpg
+38,Jair Bolsonaro,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Jair_Bolsonaro_em_24_de_abril_de_2019_%281%29_%28cropped%29.jpg/80px-Jair_Bolsonaro_em_24_de_abril_de_2019_%281%29_%28cropped%29.jpg
