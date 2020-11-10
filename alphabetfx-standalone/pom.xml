@@ -20,6 +20,7 @@
     <javafx.version>14.0.2.1</javafx.version>
     <javafx.plugin.version>0.0.4</javafx.plugin.version>
     <main.class>org.fxapps.alphabet.AlphabetFX</main.class>
+    <app.args>-Dcollections=us_presidents -Dauto=false</app.args>
   </properties>
 
   <dependencies>
@@ -53,6 +54,7 @@
         <version>${javafx.plugin.version}</version>
         <configuration>
           <mainClass>${main.class}</mainClass>
+          <commandlineArgs>${app.args}</commandlineArgs>
         </configuration>
       </plugin>
     </plugins>

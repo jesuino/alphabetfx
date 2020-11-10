@@ -90,10 +90,13 @@ public class AlphabetFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         namesFile = System.getProperty("collections", "pokemons");
-        isAuto = Boolean.getBoolean(System.getProperty("auto", Boolean.TRUE.toString()));
+        isAuto = Boolean.parseBoolean(System.getProperty("auto", Boolean.TRUE.toString()));
         noRepeat = true;
-        boolean decorated = Boolean.getBoolean(System.getProperty("decorated", Boolean.TRUE.toString()));
+
+        var decorated = Boolean.parseBoolean(System.getProperty("decorated", Boolean.TRUE.toString()));
+
         if (!decorated) {
             stage.initStyle(StageStyle.UNDECORATED);
         }
@@ -289,11 +292,9 @@ public class AlphabetFX extends Application {
     }
 
     private List<String> loadDetails() {
-        var name = NAMES_DIR + namesFile;
-        System.out.println(AlphabetFX.class.getResource("/"));
         var detailsIs = AlphabetFX.class.getResourceAsStream(NAMES_DIR + namesFile);
-        List<String> lines = new ArrayList<>();
-        BufferedReader r = new BufferedReader(new InputStreamReader(detailsIs));
+        var lines = new ArrayList<String>();
+        var r = new BufferedReader(new InputStreamReader(detailsIs));
         try {
             for (String line; (line = r.readLine()) != null;) {
                 lines.add(line);
