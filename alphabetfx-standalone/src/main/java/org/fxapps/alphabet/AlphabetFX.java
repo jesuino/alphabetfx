@@ -37,10 +37,17 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class AlphabetFX extends Application {
 
+    // System properties
+    private static final String NO_REPEAT_PROP = "noRepeat";
+    private static final String AUTO_PLAY_PROP = "autoPlay";
+    private static final String COLLECTIONS_PROP = "collections";
+    private static final String BG_COLOR_PROP = "bgColor";
+    private static final String DECORATED_PROP = "decorated";
+
+    // Base Directories
     private static final String NAMES_DIR = "/names/";
     private static final String ALPHABET_IMAGES_DIR = "/images/alphabet/";
     private static final String DETAILS_IMAGES_DIR = "/images/details/";
-
     private static final String ALPHABET_SOUND_DIR = "/sounds/alphabet/";
 
     private static final Character INITIAL_CHAR = 65; // A
@@ -77,12 +84,13 @@ public class AlphabetFX extends Application {
     private FadeTransition letterFade;
     private Timeline letterAnimation;
     private Pane root;
-    private boolean isAuto;
+    private boolean autoPlay;
     private boolean noRepeat;
 
     List<Animation> allAnimations = new ArrayList<>();
     private Label lblEnd;
     private String namesFile = "br_presidents";
+    private String bgColor;
 
     public static void main(String[] args) {
         launch();
@@ -91,18 +99,24 @@ public class AlphabetFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        namesFile = System.getProperty("collections", "pokemons");
-        isAuto = Boolean.parseBoolean(System.getProperty("auto", Boolean.TRUE.toString()));
-        noRepeat = true;
+        var decorated = Boolean.parseBoolean(System.getProperty(DECORATED_PROP, Boolean.TRUE.toString()));
+        bgColor = System.getProperty(BG_COLOR_PROP, Color.PALETURQUOISE.toString());
+        namesFile = System.getProperty(COLLECTIONS_PROP, "pokemons");
+        autoPlay = Boolean.parseBoolean(System.getProperty(AUTO_PLAY_PROP, Boolean.TRUE.toString()));
+        noRepeat = Boolean.parseBoolean(System.getProperty(NO_REPEAT_PROP, Boolean.TRUE.toString()));
 
-        var decorated = Boolean.parseBoolean(System.getProperty("decorated", Boolean.TRUE.toString()));
+        System.out.println("COLLECTIONS: " + namesFile);
+        System.out.println("AUTO PLAY: " + autoPlay);
+        System.out.println("NO REPEAT: " + noRepeat);
+        System.out.println("DECORATED " + decorated);
+        System.out.println("BG COLOR " + bgColor);
 
         if (!decorated) {
             stage.initStyle(StageStyle.UNDECORATED);
         }
         var scene = new Scene(buildApp(), WIDTH, HEIGHT);
         stage.setScene(scene);
-        scene.setFill(Color.PALETURQUOISE);
+        scene.setFill(Color.valueOf(bgColor));
         stage.show();
         //        stage.setFullScreen(true);
     }
@@ -152,7 +166,7 @@ public class AlphabetFX extends Application {
         letterFade.setNode(letterImg);
 
         letterFade.setOnFinished(e -> {
-            if (isAuto) {
+            if (autoPlay) {
                 autoAfterLetter.playFromStart();
             } else {
                 letterImg.setDisable(false);
@@ -176,7 +190,7 @@ public class AlphabetFX extends Application {
 
         letterAnimation.setOnFinished(ee -> {
             detailsImgParent.setDisable(false);
-            if (isAuto) {
+            if (autoPlay) {
                 autoAfterPokemon.playFromStart();
             }
         });
@@ -186,7 +200,7 @@ public class AlphabetFX extends Application {
             letterAnimation.playFromStart();
         });
 
-        if (!isAuto) {
+        if (!autoPlay) {
             detailsImgParent.setOnMouseClicked(e -> next());
         } else {
             root.setOnMouseClicked(e -> reset());
@@ -195,7 +209,7 @@ public class AlphabetFX extends Application {
         root.setTranslateX(0);
         root.setTranslateY(0);
         root.setMinSize(WIDTH, HEIGHT);
-        root.setStyle("-fx-background-color: paleturquoise");
+        root.setStyle("-fx-background-color: " + bgColor);
 
         loadRandomizedFor(cursor);
 
@@ -252,7 +266,7 @@ public class AlphabetFX extends Application {
     private void startOver(String letter, Pair<String, String> details) {
         stopAnimations();
         // letter image setup
-        var letterStream = AlphabetFX.class.getResourceAsStream(ALPHABET_IMAGES_DIR + "/" + letter + ".png");
+        var letterStream = AlphabetFX.class.getResourceAsStream(ALPHABET_IMAGES_DIR + letter + ".png");
         letterImg.setImage(new Image(letterStream));
         letterImg.setFitWidth(LETTER_IMG_WIDTH);
         letterImg.setFitHeight(LETTER_IMG_HEIGHT);

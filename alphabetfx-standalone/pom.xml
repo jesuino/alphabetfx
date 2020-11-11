@@ -20,6 +20,7 @@
     <javafx.version>14.0.2.1</javafx.version>
     <javafx.plugin.version>0.0.4</javafx.plugin.version>
     <main.class>org.fxapps.alphabet.AlphabetFX</main.class>
+    <shade.main.class>org.fxapps.alphabet.FatJarMain</shade.main.class>
     <app.args>-Dcollections=us_presidents -Dauto=false</app.args>
   </properties>
 
@@ -56,6 +57,27 @@
           <mainClass>${main.class}</mainClass>
           <commandlineArgs>${app.args}</commandlineArgs>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>${shade.main.class}</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
