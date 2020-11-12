@@ -34,7 +34,7 @@ The following system properties should allow users to customize the app:
 To extend to support other images:
 
 1) Create a folder X (replace X with the collections name) in `alphabetfx-standalone/src/main/resources/images/details` and place all the images there;
-2) Create a file with the same X name you used for the folder in `alphabetfx-standalone/src/main/resources/names/` - this file should contain all images names separated by line.
+2) Create a file with the same X name you used for the folder in `alphabetfx-standalone/src/main/resources/names/` - this file should contain all images names separated by line. This file must have the extension `.dat`;
 3) Now you can run the program by setting the system property collections with the value you gave to the folder (X).
 
 ## Building and Packaging

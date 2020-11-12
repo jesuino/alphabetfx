@@ -2,11 +2,13 @@ package org.fxapps.alphabet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.animation.Animation;
@@ -15,6 +17,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -38,11 +43,11 @@ import static java.util.stream.Collectors.groupingBy;
 public class AlphabetFX extends Application {
 
     // System properties
-    private static final String NO_REPEAT_PROP = "noRepeat";
-    private static final String AUTO_PLAY_PROP = "autoPlay";
-    private static final String COLLECTIONS_PROP = "collections";
-    private static final String BG_COLOR_PROP = "bgColor";
-    private static final String DECORATED_PROP = "decorated";
+    public static final String NO_REPEAT_PROP = "noRepeat";
+    public static final String AUTO_PLAY_PROP = "autoPlay";
+    public static final String COLLECTIONS_PROP = "collections";
+    public static final String BG_COLOR_PROP = "bgColor";
+    public static final String DECORATED_PROP = "decorated";
 
     // Base Directories
     private static final String NAMES_DIR = "/names/";
@@ -56,22 +61,37 @@ public class AlphabetFX extends Application {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 400;
 
-    private static final int LETTER_IMG_WIDTH = WIDTH - WIDTH / 5;
-    private static final int LETTER_IMG_HEIGHT = HEIGHT - HEIGHT / 6;
+    private static final DoubleProperty widthProperty = new SimpleDoubleProperty();
+    private static final DoubleProperty heightProperty = new SimpleDoubleProperty();
 
-    private static final int LETTER_IMG_MIN_WIDTH = LETTER_IMG_WIDTH / 5;
-    private static final int LETTER_IMG_MIN_HEIGHT = LETTER_IMG_HEIGHT / 5;
+    private static final DoubleBinding width50 = widthProperty.divide(2);
+    private static final DoubleBinding height50 = heightProperty.divide(2);
+    private static final DoubleBinding width25 = widthProperty.divide(5);
+    private static final DoubleBinding height16 = widthProperty.divide(6);
 
-    private static final int DETAILS_IMG_WIDTH = LETTER_IMG_HEIGHT - LETTER_IMG_HEIGHT / 4;
-    private static final int DETAILS_IMG_HEIGHT = LETTER_IMG_HEIGHT - LETTER_IMG_HEIGHT / 4;
+    private static final DoubleBinding LETTER_IMG_WIDTH = widthProperty.subtract(width25);
+    private static final DoubleBinding LETTER_IMG_HEIGHT = heightProperty.subtract(height16);
 
-    private static final int letterImgPosX = WIDTH / 2 - LETTER_IMG_WIDTH / 2;
-    private static final int letterImgPosY = HEIGHT / 2 - LETTER_IMG_HEIGHT / 2;
+    private static final DoubleBinding LETTER_IMG_MIN_WIDTH = LETTER_IMG_WIDTH.divide(5);
+    private static final DoubleBinding LETTER_IMG_MIN_HEIGHT = LETTER_IMG_HEIGHT.divide(5);
 
-    private static final int detailsImgPosX = WIDTH / 2 - DETAILS_IMG_WIDTH / 2;
-    private static final int detailsImgPosY = HEIGHT / 2 - DETAILS_IMG_HEIGHT / 2;
+    private static final DoubleBinding letterImageWidth25 = LETTER_IMG_WIDTH.divide(4);
+    private static final DoubleBinding letterImageHeight25 = LETTER_IMG_HEIGHT.divide(4);
+
+    private static final DoubleBinding DETAILS_IMG_WIDTH = LETTER_IMG_WIDTH.subtract(letterImageWidth25);
+    private static final DoubleBinding DETAILS_IMG_HEIGHT = LETTER_IMG_HEIGHT.subtract(letterImageHeight25);
+
+    private static final DoubleBinding letterImageWidth50 = LETTER_IMG_WIDTH.divide(2);
+    private static final DoubleBinding letterImageHeight50 = LETTER_IMG_HEIGHT.divide(2);
+
+    private static final DoubleBinding letterImgPosX = width50.subtract(letterImageWidth50);
+    private static final DoubleBinding letterImgPosY = height50.subtract(letterImageHeight50);
+
+    private static final DoubleBinding detailsImgHeight50 = DETAILS_IMG_HEIGHT.divide(2);
+    private static final DoubleBinding detailsImgPosY = height50.subtract(detailsImgHeight50);
 
     private static final String IMG_EXT = ".png";
+    private static final String NAMES_EXT = ".dat";
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     private ImageView letterImg;
@@ -96,12 +116,19 @@ public class AlphabetFX extends Application {
         launch();
     }
 
+    enum ImageCollections {
+        POKEMONS,
+        US_PRESIDENTS,
+        BR_PRESIDENTES;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-
+        widthProperty.set(WIDTH);
+        heightProperty.set(HEIGHT);
         var decorated = Boolean.parseBoolean(System.getProperty(DECORATED_PROP, Boolean.TRUE.toString()));
-        bgColor = System.getProperty(BG_COLOR_PROP, Color.PALETURQUOISE.toString());
-        namesFile = System.getProperty(COLLECTIONS_PROP, "pokemons");
+        bgColor = System.getProperty(BG_COLOR_PROP, "PALETURQUOISE");
+        namesFile = System.getProperty(COLLECTIONS_PROP, ImageCollections.POKEMONS.name().toLowerCase());
         autoPlay = Boolean.parseBoolean(System.getProperty(AUTO_PLAY_PROP, Boolean.TRUE.toString()));
         noRepeat = Boolean.parseBoolean(System.getProperty(NO_REPEAT_PROP, Boolean.TRUE.toString()));
 
@@ -114,14 +141,36 @@ public class AlphabetFX extends Application {
         if (!decorated) {
             stage.initStyle(StageStyle.UNDECORATED);
         }
+
         var scene = new Scene(buildApp(), WIDTH, HEIGHT);
         stage.setScene(scene);
         scene.setFill(Color.valueOf(bgColor));
         stage.show();
         //        stage.setFullScreen(true);
+
+        scene.widthProperty().addListener(c -> widthProperty.set(scene.getWidth()));
+        scene.heightProperty().addListener(c -> heightProperty.set(scene.getHeight()));
+    }
+
+    public void setAutoPlay(boolean autoPlay) {
+        this.autoPlay = autoPlay;
+    }
+
+    public void setNoRepeat(boolean noRepeat) {
+        this.noRepeat = noRepeat;
+    }
+
+    public void setNamesFile(ImageCollections collections) {
+        this.namesFile = ImageCollections.POKEMONS.name().toLowerCase();
+    }
+
+    public void resize(double width, double height) {
+        widthProperty.set(width);
+        heightProperty.set(height);
     }
 
     public Pane buildApp() {
+
         lblEnd = new Label("The End!");
         root = new Pane();
         detailsImages = bulkDetailsImages();
@@ -134,15 +183,16 @@ public class AlphabetFX extends Application {
         lblDetails.setEffect(new DropShadow(10, Color.BEIGE));
         lblDetails.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 40));
 
-        lblEnd.setTranslateY(HEIGHT / 2 - 50);
+        lblEnd.translateYProperty().bind(height50.subtract(50));
         lblEnd.setTranslateX(100);
         lblEnd.setVisible(false);
         lblEnd.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 80));
 
         detailsImgParent = new VBox(detailsImg, lblDetails);
-        detailsImgParent.setMinWidth(WIDTH);
-        //        detailsImgParent.setLayoutX(detailsImgPosX);
-        detailsImgParent.setLayoutY(detailsImgPosY);
+        widthProperty.addListener(c -> detailsImgParent.setMinWidth(widthProperty.get()));
+        detailsImgParent.setMinWidth(widthProperty.get());
+        detailsImgPosY.addListener(c -> detailsImg.setLayoutY(detailsImgPosY.get()));
+        detailsImgParent.setLayoutY(detailsImgPosY.get());
         detailsImgParent.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(letterImg, detailsImgParent, lblEnd);
@@ -173,16 +223,11 @@ public class AlphabetFX extends Application {
             }
         });
 
-        letterAnimation = new Timeline(new KeyFrame(Duration.millis(0),
-                                                    new KeyValue(letterImg.layoutXProperty(), letterImgPosX),
-                                                    new KeyValue(letterImg.layoutYProperty(), letterImgPosY),
-                                                    new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_WIDTH),
-                                                    new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_HEIGHT)),
-                                       new KeyFrame(Duration.millis(1000),
+        letterAnimation = new Timeline(new KeyFrame(Duration.millis(1000),
                                                     new KeyValue(letterImg.layoutXProperty(), 0),
                                                     new KeyValue(letterImg.layoutYProperty(), 0),
-                                                    new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_MIN_WIDTH),
-                                                    new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_MIN_HEIGHT)),
+                                                    new KeyValue(letterImg.fitWidthProperty(), LETTER_IMG_MIN_WIDTH.get()),
+                                                    new KeyValue(letterImg.fitHeightProperty(), LETTER_IMG_MIN_HEIGHT.get())),
                                        new KeyFrame(Duration.millis(800),
                                                     new KeyValue(detailsImgParent.opacityProperty(), 0)),
                                        new KeyFrame(Duration.millis(2000),
@@ -208,7 +253,7 @@ public class AlphabetFX extends Application {
 
         root.setTranslateX(0);
         root.setTranslateY(0);
-        root.setMinSize(WIDTH, HEIGHT);
+        root.setMinSize(widthProperty.get(), heightProperty.get());
         root.setStyle("-fx-background-color: " + bgColor);
 
         loadRandomizedFor(cursor);
@@ -266,20 +311,22 @@ public class AlphabetFX extends Application {
     private void startOver(String letter, Pair<String, String> details) {
         stopAnimations();
         // letter image setup
-        var letterStream = AlphabetFX.class.getResourceAsStream(ALPHABET_IMAGES_DIR + letter + ".png");
+        var letterStream = getResourceAsStream(ALPHABET_IMAGES_DIR + letter + ".png");
         letterImg.setImage(new Image(letterStream));
-        letterImg.setFitWidth(LETTER_IMG_WIDTH);
-        letterImg.setFitHeight(LETTER_IMG_HEIGHT);
+        letterImg.setFitWidth(LETTER_IMG_WIDTH.get());
+        letterImg.setFitHeight(LETTER_IMG_HEIGHT.get());
         letterImg.setSmooth(true);
-        letterImg.setLayoutX(letterImgPosX);
-        letterImg.setLayoutY(letterImgPosY);
+        letterImg.setLayoutX(letterImgPosX.get());
+        letterImg.setLayoutY(letterImgPosY.get());
         letterImg.setDisable(true);
         letterImg.setOpacity(0);
 
         // details img setup
-        detailsImg.setImage(new Image(AlphabetFX.class.getResourceAsStream(details.getValue())));
-        detailsImg.setFitWidth(DETAILS_IMG_WIDTH);
-        detailsImg.setFitHeight(DETAILS_IMG_HEIGHT);
+        detailsImg.setImage(new Image(getResourceAsStream(details.getValue())));
+        DETAILS_IMG_WIDTH.addListener(c -> detailsImg.setFitWidth(DETAILS_IMG_WIDTH.get()));
+        detailsImg.setFitWidth(DETAILS_IMG_WIDTH.get());
+        DETAILS_IMG_HEIGHT.addListener(c -> detailsImg.setFitHeight(DETAILS_IMG_HEIGHT.get()));
+        detailsImg.setFitHeight(DETAILS_IMG_HEIGHT.get());
         detailsImg.setPreserveRatio(true);
         detailsImg.setSmooth(true);
 
@@ -306,7 +353,7 @@ public class AlphabetFX extends Application {
     }
 
     private List<String> loadDetails() {
-        var detailsIs = AlphabetFX.class.getResourceAsStream(NAMES_DIR + namesFile);
+        var detailsIs = getResourceAsStream(NAMES_DIR + namesFile + NAMES_EXT);
         var lines = new ArrayList<String>();
         var r = new BufferedReader(new InputStreamReader(detailsIs));
         try {
@@ -317,6 +364,12 @@ public class AlphabetFX extends Application {
             System.out.println("Not able to read input stream lines");
         }
         return lines;
+    }
+
+    private static InputStream getResourceAsStream(String path) {
+        return Optional.ofNullable(Thread.currentThread().getContextClassLoader().getResourceAsStream(path))
+                       .or(() -> Optional.ofNullable(AlphabetFX.class.getResourceAsStream(path)))
+                       .orElseThrow(() -> new RuntimeException("Not able to load resource: " + path));
     }
 
 }
