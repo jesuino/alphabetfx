@@ -117,18 +117,26 @@ public class AlphabetFX extends Application {
     }
 
     enum ImageCollections {
+
         POKEMONS,
         US_PRESIDENTS,
-        BR_PRESIDENTES;
+        BR_PRESIDENTS,
+        NARUTO,
+        FLAGS,
+        TURMA_DA_MONICA;
+
+        public static ImageCollections getDefault() {
+            return BR_PRESIDENTS;
+        }
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         widthProperty.set(WIDTH);
         heightProperty.set(HEIGHT);
-        var decorated = Boolean.parseBoolean(System.getProperty(DECORATED_PROP, Boolean.TRUE.toString()));
-        bgColor = System.getProperty(BG_COLOR_PROP, "PALETURQUOISE");
-        namesFile = System.getProperty(COLLECTIONS_PROP, ImageCollections.POKEMONS.name().toLowerCase());
+        var decorated = Boolean.parseBoolean(System.getProperty(DECORATED_PROP, Boolean.FALSE.toString()));
+        bgColor = System.getProperty(BG_COLOR_PROP, "aliceblue");
+        namesFile = System.getProperty(COLLECTIONS_PROP, ImageCollections.getDefault().name().toLowerCase());
         autoPlay = Boolean.parseBoolean(System.getProperty(AUTO_PLAY_PROP, Boolean.TRUE.toString()));
         noRepeat = Boolean.parseBoolean(System.getProperty(NO_REPEAT_PROP, Boolean.TRUE.toString()));
 
@@ -279,6 +287,7 @@ public class AlphabetFX extends Application {
             advanceCursor();
             if (i == rounds) {
                 stopAnimations();
+                System.out.println("END!");
                 lblEnd.setVisible(true);
                 return;
             }
